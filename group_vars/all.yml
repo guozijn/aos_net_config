@@ -1,0 +1,52 @@
+---
+bonding_mtu: 9000
+network_config:
+  - type: ovs_bridge
+    name: br-ex
+    mtu: "{{ bonding_mtu }}"
+    members:
+      - type: linux_bond
+        name: bond0
+        bonding_options: "mode=1 miimon=100"
+        mtu: "{{ bonding_mtu }}"
+        members:
+          - type: interface
+            name: eth2
+            mtu: "{{ bonding_mtu }}"
+          - type: interface
+            name: eth3
+            mtu: "{{ bonding_mtu }}"
+      - type: vlan
+        device: bond0
+        vlan_id: 30
+        mtu: "{{ bonding_mtu }}"
+        addresses:
+          - ip_netmask: "{{ vlan30 }}/24"
+        routes:
+          - ip_netmask: 0.0.0.0/0
+            next_hop: "{{ gateway }}"
+            default: true
+      - type: vlan
+        device: bond0
+        vlan_id: 40
+        mtu: "{{ bonding_mtu }}"
+        addresses:
+          - ip_netmask: "{{ vlan40 }}/24"
+      - type: vlan
+        device: bond0
+        vlan_id: 50
+        mtu: "{{ bonding_mtu }}"
+        addresses:
+          - ip_netmask: "{{ vlan50 }}/24"
+      - type: vlan
+        device: bond0
+        vlan_id: 60
+        mtu: "{{ bonding_mtu }}"
+        addresses:
+          - ip_netmask: "{{ vlan60 }}/24"
+      - type: vlan
+        device: bond0
+        vlan_id: 70
+        mtu: "{{ bonding_mtu }}"
+        addresses:
+          - ip_netmask: "{{ vlan70 }}/24"

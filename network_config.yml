@@ -1,0 +1,10 @@
+---
+- name: Apply role network
+  hosts: openstack
+  gather_facts: no
+  tasks:
+    - name: Apply network configuration
+      aos_net_config:
+        network_config: "{{ network_config }}"
+        exit_on_validation_errors: true
+        verbose: true
